@@ -1,0 +1,32 @@
+{% extends 'diagerda/base.html' %}
+{% load static %}
+{% load mediapath %}
+{% block content %}
+
+        <h3>ОБЩАЯ ИНФОРМАЦИЯ</h3>
+<div class="review_text">
+    <p>ООО "ДиаГерда"</p>
+    <p>ИНН 666666666</p>
+    <p>ОГРН 555555555555</p>
+    <p>Юр. адрес: г. Ростов-на-Дону, пер. Огуречный, д. 13</p>
+    <p>Единый телефон +7 (863) 444 44 44</p>
+            </div>
+
+<h3>Форма обратной связи</h3>
+
+
+        <div class="send_contact">
+
+            <div class="review_text">
+                Отправьте ваш отзыв либо вопрос через форму ниже
+            </div>
+            <form method="post" action="#" id="review">
+                <input type="text" name="review_name" placeholder="ваше имя">
+                <input type="text" name="review_email" placeholder="ваш email">
+                <textarea name="review_text"></textarea>
+                <input type="submit" value="отправить">
+            </form>
+
+        </div>
+
+        {% endblock %}

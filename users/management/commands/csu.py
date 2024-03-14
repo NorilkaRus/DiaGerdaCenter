@@ -9,6 +9,9 @@ class Command(BaseCommand):
             email='admin@admin.com',
             telegram='admin',
             phone='88005553535',
+            first_name='Татьяна',
+            last_name='Шишка',
+            birthday='1994-09-08',
             is_superuser=True,
             is_staff=True,
             is_active=True

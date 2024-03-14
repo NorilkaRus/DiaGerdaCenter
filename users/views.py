@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import User
 from django.template import loader
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import CreateView, UpdateView, TemplateView, View
+from django.views.generic import CreateView, UpdateView, TemplateView, View, ListView
 from django.urls import reverse_lazy, reverse
 from users.forms import RegisterForm, UserForm
 from django.core.mail import send_mail
@@ -177,3 +177,14 @@ class UserUpdateView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserDetailView(View):
+
+    def get(self, request):
+        user = request.user
+        context = {
+            'object': user,
+            'title': f'{user.telegram}'
+        }
+        return render(request, 'users/profile.html', context)

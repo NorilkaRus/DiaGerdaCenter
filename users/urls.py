@@ -3,7 +3,6 @@ from django.urls import path
 from django.contrib import admin
 from .apps import UsersConfig
 
-
 app_name = UsersConfig.name
 
 urlpatterns = [
@@ -17,5 +16,6 @@ urlpatterns = [
     path('profile/genpassword/', generate_new_password, name='generate_new_password'),
     path('regenerations/', regenerate_password, name='regenerate_password'),
     path('email_confirmation_sent/', UserConfirmationSentView.as_view(), name='email_confirmation_sent'),
-    path('profile/', UserUpdateView.as_view(), name='profile'),
+    path('profile/update/', UserUpdateView.as_view(), name='profile_update'),
+    path('profile/', UserDetailView.as_view(), name='profile'),
 ]
