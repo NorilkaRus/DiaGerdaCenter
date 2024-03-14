@@ -26,7 +26,7 @@
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
-                <a class="text-muted" href="#">Subscribe</a>
+                <a class="text-muted" href="#">Сведения о медицинской организации</a>
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="{% url 'index' %}">DiaGerda</a>
@@ -42,30 +42,18 @@
                 </a>
 
                 {% if not user.is_authenticated %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'users:login' %}">Вход <span
-                            class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'users:register' %}">Регистрация <span
-                            class="sr-only">(current)</span></a>
-                </li>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:login' %}">Вход</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:register' %}">Регистрация</a>
 
                 {% else %}
 
-                <li class="nav-item active">
-                    <a class="nav-link" href="{% url 'users:profile' %}">Профиль <span
-                            class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <form action="{% url 'users:logout' %}" method="post">
-  {% csrf_token %}
-  <button type="submit">Log Out</button>
-</form>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:profile' %}">Профиль</a>
+                <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:logout' %}" method="post">Выход</a>
 
-                    <a class="nav-link" href="{% url 'users:logout' %}" method="post">Выход <span
-                            class="sr-only">(current)</span></a>
-                </li>
+                    <form action="{% url 'users:logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="btn btn-sm btn-outline-secondary">Выход</button>
+                    </form>
                 {% endif %}
 
             </div>

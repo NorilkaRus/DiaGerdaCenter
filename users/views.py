@@ -32,9 +32,8 @@ class UserLogin(LoginView):
 
 
 class UserLogout(LogoutView):
-    model = User
     http_method_names = ["post", "options"]
-    success_url = ('index')
+    template_name = "diagerda/index.html"
     extra_context = None
 
 
@@ -50,11 +49,11 @@ class UserLogout(LogoutView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        current_site = get_current_site(self.request)
+        current_site = 'index'
         context.update(
             {
-                "site": current_site,
-                "site_name": current_site.name,
+                "site": 'index',
+                "site_name": 'index',
                 "title": _("Logged out"),
                 "subtitle": None,
                 **(self.extra_context or {}),
