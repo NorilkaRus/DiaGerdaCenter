@@ -1,10 +1,14 @@
 from django.contrib import admin
-from .models import Doctor, Diagnostic, Appointment
+from .models import Doctor, Diagnostic, Appointment, Speciality
 # Register your models here.
+
+@admin.register(Speciality)
+class SpecialityAdmin(admin.ModelAdmin):
+    list_display = ('title',)
 
 @admin.register(Doctor)
 class DoctorAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'speciality',)
+    list_display = ('first_name', 'last_name',)
     list_filter = ('last_name', 'speciality',)
     search_fields = ('last_name', 'speciality',)
 

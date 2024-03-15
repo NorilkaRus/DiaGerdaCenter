@@ -6,13 +6,14 @@ from django import forms
 class StyleFormMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 
 class RegisterForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
-        fields = ('email', 'telegram', 'phone', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'birthday', 'email', 'telegram', 'phone', 'password1', 'password2')
 
 
 class UserForm(StyleFormMixin, UserChangeForm):
@@ -20,7 +21,7 @@ class UserForm(StyleFormMixin, UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'telegram', 'phone', 'avatar')
+        fields = ('first_name', 'last_name', 'birthday', 'email', 'password', 'telegram', 'phone', 'avatar')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

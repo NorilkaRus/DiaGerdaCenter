@@ -1,0 +1,24 @@
+{% extends 'diagerda/base.html' %}
+{% load static %}
+{% load mediapath %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+        <h1 class="display-5 fw-bolder">{{ object.title }}</h1>
+    </div>
+
+    {% if object.description %}
+    <p class="lead">{{ object.description }}</p>
+    {% endif %}
+</div>
+<div class="d-flex">
+    <p class="lead">{{doctors}}</p>
+
+</div>
+
+</div>
+</div>
+{% endblock %}
