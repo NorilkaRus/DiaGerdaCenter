@@ -88,8 +88,8 @@ class SpecialityListView(ListView):
 
 class SpecialityDetailView(DetailView):
     def get(self, request, pk):
-        object = Speciality.objects.get(id=pk)
-        doctors = Speciality.doctors
+        object = Speciality.objects.prefetch_related('doctors').get(id=pk)
+        doctors = object.doctors.all()
         context = {
             'object': object,
             'doctors': doctors,

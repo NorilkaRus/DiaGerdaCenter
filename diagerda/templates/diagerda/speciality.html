@@ -15,7 +15,12 @@
     {% endif %}
 </div>
 <div class="d-flex">
-    <p class="lead">{{doctors}}</p>
+    <div class="d-flex">
+    {% for doctor in doctors %}
+        <p class="lead">{{ doctor.first_name }}</p>
+        <p class="lead">{{ doctor.last_name }}</p>
+    {% endfor %}
+</div>
 
 </div>
 
