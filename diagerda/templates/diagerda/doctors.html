@@ -5,13 +5,14 @@
 
 <div class="container marketing">
     <div class="row">
-        {% for object in object_list %}
+        {% for object in doctor %}
         <div class="col-lg-4">
             <img class="rounded-circle"
                  src="{% mediapath object.photo %}"
                  alt="Generic placeholder image"
                  width="140" height="140">
             <h2>{{ object.first_name}} {{ object.last_name}}</h2>
+            {{ speciality_list }}
             <h4>{{ object.speciality }}</h4>
         </div>
         {% endfor %}

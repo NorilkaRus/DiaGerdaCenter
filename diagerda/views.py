@@ -18,15 +18,24 @@ def about(request):
 
 class DoctorsListView(ListView):
     model = Doctor
-    template_name = 'diagerda/doctors.html'
+    # template_name = 'diagerda/doctors.html'
 
-    def get_context(self):
-        context_data = get_category_cache()
-        return context_data
+    # def get_context(self):
+    #     context_data = get_category_cache()
+    #     return context_data
+    #
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     return queryset
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        return queryset
+    def get(self, request):
+        doctor = Doctor.objects.all()
+        speciality_list = Doctor.speciality
+        context = {
+            'speciality_list': speciality_list,
+            'doctor':doctor,
+        }
+        return render(request, 'diagerda/doctors.html', context)
 
 
 class AppointmentListView(ListView):
@@ -87,12 +96,14 @@ class SpecialityListView(ListView):
 
 
 class SpecialityDetailView(DetailView):
+    model = Speciality
+
     def get(self, request, pk):
-        object = Speciality.objects.prefetch_related('doctors').get(id=pk)
-        doctors = object.doctors.all()
+        speciality = Speciality.objects.get(id=pk)
+        doctor = Doctor.objects.filter(speciality = speciality)
         context = {
-            'object': object,
-            'doctors': doctors,
-            'title': f'{object.title}'
+            'speciality': speciality,
+            'doctor':doctor,
+            'title': f'{speciality.title}'
         }
         return render(request, 'diagerda/speciality.html', context)

@@ -7,8 +7,6 @@ class Speciality(models.Model):
     title = models.CharField(max_length=100, verbose_name='Наименование')
     icon = models.ImageField(upload_to='icons/', verbose_name='Иконка', **NULLABLE)
     description = models.TextField(verbose_name='описание', **NULLABLE)
-    doctors = (models.ManyToManyField('Doctor', verbose_name='Врачи',
-                                         related_name='Doctor', **NULLABLE))
 
     def __str__(self):
         return f'{self.title}'
