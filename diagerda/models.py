@@ -1,5 +1,7 @@
 from django.db import models
 from users.models import User
+from django.core.exceptions import ValidationError
+from django.utils import timezone
 # Create your models here.
 NULLABLE = {'blank':  True, 'null': True}
 
@@ -61,3 +63,10 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = 'запись на диагностику'
         verbose_name_plural = 'записи на диагностику'
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+
+        now = timezone.now()
+        if self.date < now:
+            raise ValidationError('Не допускается создавать записи в прошедшем времени')
