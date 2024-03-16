@@ -8,6 +8,7 @@ from django.views.generic import CreateView, ListView, DetailView, UpdateView, D
 from .forms import AppointmentForm
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -18,24 +19,15 @@ def about(request):
 
 class DoctorsListView(ListView):
     model = Doctor
-    # template_name = 'diagerda/doctors.html'
+    template_name = 'diagerda/doctors.html'
 
-    # def get_context(self):
-    #     context_data = get_category_cache()
-    #     return context_data
-    #
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     return queryset
+    def get_context(self):
+        context_data = get_category_cache()
+        return context_data
 
-    def get(self, request):
-        doctor = Doctor.objects.all()
-        speciality_list = Doctor.speciality
-        context = {
-            'speciality_list': speciality_list,
-            'doctor':doctor,
-        }
-        return render(request, 'diagerda/doctors.html', context)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset
 
 
 class AppointmentListView(ListView):
@@ -49,12 +41,13 @@ class AppointmentListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
+        current_datetime = datetime.now()
 
         if user.is_authenticated:  # для зарегистрированных пользователей
             if user.is_staff or user.is_superuser:  # для работников и суперпользователя
                 queryset = super().get_queryset().order_by('diagnostic')
             else:  # для остальных пользователей
-                queryset = super().get_queryset().filter(user=None).order_by('diagnostic')
+                queryset = super().get_queryset().filter(user=None, date__gte = current_datetime).order_by('diagnostic')
         else:  # для незарегистрированных пользователей
             queryset = None
         return queryset

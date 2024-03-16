@@ -25,7 +25,7 @@ class Doctor(models.Model):
                                    related_name='speciality'))
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}: {self.speciality}'
+        return f'{self.first_name} {self.last_name}'
 
     class Meta:
         verbose_name = 'врач'

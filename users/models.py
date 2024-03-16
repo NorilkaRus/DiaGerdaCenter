@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import datetime
 
 # Create your models here.
 NULLABLE = {'blank':  True, 'null': True}
@@ -16,3 +17,10 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name} ({self.birthday.strftime("%d.%m.%Y")})'
+
+    class Meta:
+        verbose_name = 'пациент'
+        verbose_name_plural = 'пациенты'
