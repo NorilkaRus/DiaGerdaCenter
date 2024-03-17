@@ -84,7 +84,7 @@ class SpecialityListView(ListView):
         return context_data
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by('title')
         return queryset
 
 
