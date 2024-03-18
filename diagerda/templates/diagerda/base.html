@@ -48,11 +48,10 @@
                 {% else %}
 
                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:profile' %}">Профиль</a>
-                <a class="btn btn-sm btn-outline-secondary" href="{% url 'users:logout' %}" method="post">Выход</a>
 
                     <form action="{% url 'users:logout' %}" method="post">
                         {% csrf_token %}
-                        <button type="btn btn-sm btn-outline-secondary">Выход</button>
+                        <button class="btn btn-sm btn-outline-secondary" type="btn btn-sm btn-outline-secondary">Выход</button>
                     </form>
                 {% endif %}
 

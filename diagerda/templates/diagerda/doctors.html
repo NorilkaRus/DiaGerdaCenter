@@ -12,8 +12,9 @@
                  alt="Generic placeholder image"
                  width="140" height="140">
             <h2>{{ object.first_name}} {{ object.last_name}}</h2>
-            {{ speciality_list }}
-            <h4>{{ object.speciality }}</h4>
+            {% for spec in object.speciality.all %}
+            <h4>{{ spec.title }}</h4>
+            {% endfor %}
         </div>
         {% endfor %}
     </div>

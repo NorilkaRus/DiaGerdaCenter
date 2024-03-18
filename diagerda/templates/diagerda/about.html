@@ -21,6 +21,7 @@
                 Отправьте ваш отзыв либо вопрос через форму ниже
             </div>
             <form method="post" action="#" id="review">
+                {% csrf_token %}
                 <input type="text" name="review_name" placeholder="ваше имя">
                 <input type="text" name="review_email" placeholder="ваш email">
                 <textarea name="review_text"></textarea>

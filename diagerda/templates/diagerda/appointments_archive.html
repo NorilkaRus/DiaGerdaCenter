@@ -8,7 +8,7 @@
 
     <div class="nav-scroller py-1 mb-2">
         <a class="btn btn-success my-6" href="{% url 'diagerda:user_appointments' %}">Мои текущие записи</a>
-        <a class="btn btn-success my-6" href="{% url 'diagerda:appointments_archive' %}">Архив прошедших записей</a>
+        <a class="btn btn-success my-6" href="{% url 'diagerda:appointments' %}">Записаться на прием</a>
     </div>
     <div class="card mb-4 box-shadow">
     </div>
@@ -17,23 +17,19 @@
         {% for object in object_list %}
         <div class="card mb-4 box-shadow">
             <div class="card-header">
-                <h3 class="my-0 font-weight-normal">{{ object.diagnostic.title}}</h3>
+                <h4 class="my-0 font-weight-normal">{{ object.diagnostic.title}}</h4>
             </div>
             <div class="card-body">
                 <ul class="list-unstyled mt-3 mb-4">
-                    <h4>Стоимость: {{ object.diagnostic.price}} руб.</h4>
-                    <h4>Врач: {{ object.doctor}}</h4>
-                    <h4>Дата и время: {{ object.date }}</h4>
-                    {% if object.user %}
-                    <h4>Пациент: {{ object.user }}</h4>
-                    {% endif %}
+                    <h5>Стоимость: {{ object.diagnostic.price}} руб.</h5>
+                    <h5>Врач: {{ object.doctor}}</h5>
+                    <h5>Дата и время: {{ object.date }}</h5>
+                    <h5>Пациент: {{ object.user }}</h5>
                 </ul>
-                {% if not user.is_staff %}
-                <a class="btn btn-lg btn-block btn-primary"
-                   href="{% url 'diagerda:appointments_update' object.pk %}">Записаться на прием</a>
-                {% endif %}
             </div>
         </div>
+
+
         {% endfor %}
     </div>
 </div>

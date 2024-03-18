@@ -12,11 +12,11 @@
             <div class="medium mb-1">Telegram: @{{ user.telegram }}</div>
             <div class="medium mb-1">e-mail: {{ user.email }}</div>
             <div class="medium mb-1">Номер телефона: {{ user.phone }}</div>
+            <a href="{% url 'users:profile_update' %}" class="btn btn-primary my-2">Редактировать профиль</a>
         </div>
         <img class="card-img-right flex-auto d-none d-md-block" src="{% mediapath user.avatar %}" alt="Card image cap">
     </div>
+    <div class="card-body">
+    </div>
 </div>
-
-        <a href="{% url 'users:profile_update' %}" class="btn btn-primary my-2">Редактировать профиль</a>
-
 {% endblock %}

@@ -23,7 +23,7 @@
                         {% if object.author %}
                         <p class="card-text">Автор: {{ object.author }}</p>
                         {% endif %}
-                        <p class="card-text">{{ object.created_at }}</p>
+                        <p class="card-text">{{ object.created_at|date:"d M Y" }}</p>
                     </div>
 
                 </div>

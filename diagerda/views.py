@@ -53,6 +53,46 @@ class AppointmentListView(ListView):
         return queryset
 
 
+class AppointmentUserListView(ListView):
+    """"Показ списка забронированных пользователем записей на диагностику"""
+    model = Appointment
+    template_name = 'diagerda/user_appointments.html'
+
+    def get_context(self):
+        context_data = get_category_cache()
+        return context_data
+
+    def get_queryset(self):
+        user = self.request.user
+        current_datetime = datetime.now()
+
+        if user.is_authenticated:  # для зарегистрированных пользователей
+            queryset = super().get_queryset().filter(user=user, date__gte = current_datetime).order_by('date')
+        else:  # для незарегистрированных пользователей
+            queryset = None
+        return queryset
+
+
+class AppointmentArchiveListView(ListView):
+    """"Показ списка прошедших записей на диагностику"""
+    model = Appointment
+    template_name = 'diagerda/appointments_archive.html'
+
+    def get_context(self):
+        context_data = get_category_cache()
+        return context_data
+
+    def get_queryset(self):
+        user = self.request.user
+        current_datetime = datetime.now()
+
+        if user.is_authenticated:  # для зарегистрированных пользователей
+            queryset = super().get_queryset().filter(user=user, date__lt = current_datetime).order_by('-date')
+        else:  # для незарегистрированных пользователей
+            queryset = None
+        return queryset
+
+
 class AppointmentUpdateView(UpdateView):
     """"Запись пациента на диагностику"""
     model = Appointment
@@ -70,7 +110,8 @@ class AppointmentUpdateView(UpdateView):
     def form_valid(self, form):
         context_data = self.get_context_data()
         formset = context_data['formset']
-        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save(update_fields=['user'])
         return super().form_valid(form)
 
 
