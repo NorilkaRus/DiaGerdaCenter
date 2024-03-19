@@ -19,6 +19,8 @@ from django.contrib.auth import login, logout
 from django.contrib.auth import get_user
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Create your views here.
 
 def users(request):
@@ -179,12 +181,11 @@ class UserUpdateView(UpdateView):
         return self.request.user
 
 
-class UserDetailView(View):
+class UserDetailView(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
         context = {
             'object': user,
-            'title': f'{user.telegram}'
         }
         return render(request, 'users/profile.html', context)

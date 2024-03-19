@@ -9,12 +9,16 @@ from .forms import AppointmentForm
 from django.urls import reverse_lazy
 from django.forms import inlineformset_factory
 from datetime import datetime
+from django.views.generic.base import View
+from django.shortcuts import redirect, get_object_or_404
 
 # Create your views here.
 def index(request):
     return render(request, 'diagerda/index.html')
 
 def about(request):
+    if request.method=="POST":
+        print(request.POST.get('review_name'))
     return render(request, 'diagerda/about.html')
 
 class DoctorsListView(ListView):
@@ -93,26 +97,26 @@ class AppointmentArchiveListView(ListView):
         return queryset
 
 
-class AppointmentUpdateView(UpdateView):
+class AppointmentAddView(View):
     """"Запись пациента на диагностику"""
-    model = Appointment
-    form_class = AppointmentForm
-    success_url = reverse_lazy('diagerda:index')
+    success_url = reverse_lazy('diagerda:user_appointments')
 
-    def get_context_data(self, **kwargs):
-        user = self.request.user
-        context_data = super().get_context_data(**kwargs)
-        context_data['user'] = user
-        AppointmentFormset = inlineformset_factory(User, Appointment, form=AppointmentForm)
-        context_data['formset'] = AppointmentFormset(instance=self.object.user)
-        return context_data
+    def post(self, request, pk, *args, **kwargs):
+        appointment = get_object_or_404(Appointment, pk=pk)
+        appointment.user = request.user
+        appointment.save()
+        return redirect(self.success_url)
 
-    def form_valid(self, form):
-        context_data = self.get_context_data()
-        formset = context_data['formset']
-        self.object.user = self.request.user
-        self.object.save(update_fields=['user'])
-        return super().form_valid(form)
+
+class AppointmentCancelView(View):
+    """"Отмена записи на прием"""
+    success_url = reverse_lazy('diagerda:user_appointments')
+
+    def post(self, request, pk, *args, **kwargs):
+        appointment = get_object_or_404(Appointment, pk=pk)
+        appointment.user = None
+        appointment.save()
+        return redirect(self.success_url)
 
 
 class SpecialityListView(ListView):

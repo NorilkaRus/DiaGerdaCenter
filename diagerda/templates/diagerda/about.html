@@ -23,7 +23,7 @@
             <form method="post" action="#" id="review">
                 {% csrf_token %}
                 <input type="text" name="review_name" placeholder="ваше имя">
-                <input type="text" name="review_email" placeholder="ваш email">
+                <input type="email" name="review_email" placeholder="ваш email">
                 <textarea name="review_text"></textarea>
                 <input type="submit" value="отправить">
             </form>

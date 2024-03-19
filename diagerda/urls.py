@@ -12,7 +12,7 @@ urlpatterns = [
     path('appointments/', AppointmentListView.as_view(), name='appointments'),
     path('appointments/my/', AppointmentUserListView.as_view(), name='user_appointments'),
     path('appointments/archive/', AppointmentArchiveListView.as_view(), name='appointments_archive'),
-    path('appointments/update/<int:pk>/', AppointmentUpdateView.as_view(), name='appointments_update'),
+    path('appointments/<int:pk>/add/', AppointmentAddView.as_view(), name='appointments_add'),
+    path('appointments/<int:pk>/cancel/', AppointmentCancelView.as_view(), name='appointments_cancel'),
     path("speciality/<int:pk>/", SpecialityDetailView.as_view(), name="speciality_detail"),
-
 ]

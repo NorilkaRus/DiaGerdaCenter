@@ -13,7 +13,7 @@ class StyleFormMixin:
 class RegisterForm(StyleFormMixin, UserCreationForm):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'birthday', 'email', 'telegram', 'phone', 'password1', 'password2')
+        fields = ('first_name', 'last_name', 'birthday', 'email', 'phone', 'password1', 'password2')
 
 
 class UserForm(StyleFormMixin, UserChangeForm):
