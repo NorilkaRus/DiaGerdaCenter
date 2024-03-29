@@ -13,15 +13,21 @@ from django.views.generic.base import View
 from django.shortcuts import redirect, get_object_or_404
 
 # Create your views here.
-def index(request):
-    return render(request, 'diagerda/index.html')
-
 def about(request):
+    """"Страница сведений о клинике и обратной связи"""
     if request.method=="POST":
-        print(request.POST.get('review_name'))
+        feedbak = Feedback.create(
+            name=request.POST.get('review_name'),
+            email=request.POST.get('review_email'),
+            text=request.POST.get('review_text'),
+            date=datetime.now()
+        )
+        feedbak.save()
     return render(request, 'diagerda/about.html')
 
+
 class DoctorsListView(ListView):
+    """Показ списка врачей"""
     model = Doctor
     template_name = 'diagerda/doctors.html'
 
@@ -49,9 +55,10 @@ class AppointmentListView(ListView):
 
         if user.is_authenticated:  # для зарегистрированных пользователей
             if user.is_staff or user.is_superuser:  # для работников и суперпользователя
-                queryset = super().get_queryset().order_by('diagnostic')
+                queryset = super().get_queryset().filter(date__gte = current_datetime).order_by('date', 'diagnostic', )
             else:  # для остальных пользователей
-                queryset = super().get_queryset().filter(user=None, date__gte = current_datetime).order_by('diagnostic')
+                queryset = super().get_queryset().filter(user=None,
+                                                         date__gte = current_datetime).order_by('date','diagnostic')
         else:  # для незарегистрированных пользователей
             queryset = None
         return queryset
@@ -91,7 +98,10 @@ class AppointmentArchiveListView(ListView):
         current_datetime = datetime.now()
 
         if user.is_authenticated:  # для зарегистрированных пользователей
-            queryset = super().get_queryset().filter(user=user, date__lt = current_datetime).order_by('-date')
+            if user.is_staff or user.is_superuser:  # для работников и суперпользователя
+                queryset = super().get_queryset().filter(date__lt = current_datetime).order_by('-date', 'diagnostic')
+            else:  # для остальных пользователей
+                queryset = super().get_queryset().filter(user=user, date__lt = current_datetime).order_by('-date', 'diagnostic')
         else:  # для незарегистрированных пользователей
             queryset = None
         return queryset
@@ -134,6 +144,7 @@ class SpecialityListView(ListView):
 
 
 class SpecialityDetailView(DetailView):
+    """"Детальная информация о специализации"""
     model = Speciality
 
     def get(self, request, pk):

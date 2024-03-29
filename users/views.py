@@ -163,14 +163,6 @@ def regenerate_password(request):
         return redirect(reverse('catalog:home'))
     return render(request, 'users/regenerate_password.html')
 
-send_mail(
-    'Test Subject',
-    'Test message body',
-    'fridaguineapig@yandex.ru',
-    ['norilkarus@gmail.com'],
-    fail_silently=False,
-)
-
 
 class UserUpdateView(UpdateView):
     model = User

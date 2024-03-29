@@ -12,7 +12,7 @@
     </div>
     <div class="card mb-4 box-shadow">
     </div>
-<div class="col-12 text-center">
+    <div class="col-12 text-center">
         <a class="blog-header-logo text-dark" href="{% url 'diagerda:index' %}">Прошедшие записи на прием</a>
         <p></p>
     </div>
@@ -27,6 +27,11 @@
                     <h5>Стоимость: {{ object.diagnostic.price}} руб.</h5>
                     <h5>Врач: {{ object.doctor}}</h5>
                     <h5>Дата и время: {{ object.date }}</h5>
+                    {% if object.user %}
+                    {% if user.is_staff %}
+                    <h5>Пациент: {{ object.user }}</h5>
+                    {% endif %}
+                    {% endif %}
                 </ul>
             </div>
         </div>

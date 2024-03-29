@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Doctor, Diagnostic, Appointment, Speciality
+from .models import Doctor, Diagnostic, Appointment, Speciality, Feedback
 # Register your models here.
 
 @admin.register(Speciality)
@@ -23,3 +23,9 @@ class AppointmentAdmin(admin.ModelAdmin):
     list_display = ('user', 'doctor', 'diagnostic',)
     list_filter = ('user', 'doctor', 'diagnostic',)
     search_fields = ('user', 'doctor', 'diagnostic',)
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'date',)
+    list_filter = ('name', 'email', 'date',)
+    search_fields = ('name', 'email', 'date',)
